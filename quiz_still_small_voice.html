@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Still Small Voice – Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--purple:#4A148C;--purple-light:#9C27B0;--lavender:#E1BEE7;--night:#1A0A2E;--gold:#F9A825;--green:#4CAF72;--red:#E05555;--cave:#F3EEF8;--mist:#FAF5FF;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#311B92 0%,#4A148C 50%,#6A1B9A 100%);min-height:100vh;overflow-x:hidden}
+  .star{position:fixed;font-size:1.5rem;opacity:.25;pointer-events:none;animation:twinkle 4s ease-in-out infinite}
+  .star:nth-child(1){top:8%;left:5%;animation-delay:0s}.star:nth-child(2){top:15%;right:6%;animation-delay:1s}.star:nth-child(3){top:40%;left:3%;animation-delay:2s;font-size:1rem}.star:nth-child(4){bottom:20%;right:4%;animation-delay:1.5s}.star:nth-child(5){bottom:8%;left:8%;animation-delay:3s;font-size:1.2rem}
+  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.4;transform:scale(1.2)}}
+  .container{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+  .header{text-align:center;margin-bottom:32px;animation:dropIn .6s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes dropIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .main-emoji{font-size:4.5rem;display:block;margin-bottom:8px;animation:pulse 3s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.85}}
+  h1{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:#fff;line-height:1.2;text-shadow:2px 2px 8px rgba(0,0,0,.4)}
+  .subtitle{font-size:1rem;color:#E1BEE7;opacity:.9;margin-top:6px;font-weight:600}
+  .scripture-badge{display:inline-block;background:var(--night);color:var(--lavender);font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-top:10px;letter-spacing:.5px}
+  .progress-wrap{background:rgba(255,255,255,.2);border-radius:12px;height:12px;margin-bottom:24px;overflow:hidden}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--purple-light),var(--lavender));border-radius:12px;transition:width .5s cubic-bezier(.34,1.56,.64,1)}
+  .progress-label{text-align:center;font-size:.82rem;font-weight:700;color:#E1BEE7;margin-bottom:10px;opacity:.9}
+  .card{background:var(--mist);border-radius:24px;padding:28px 24px;box-shadow:0 8px 32px rgba(26,10,46,.3);animation:cardIn .4s cubic-bezier(.34,1.56,.64,1) both;border:2px solid rgba(156,39,176,.2)}
+  @keyframes cardIn{from{transform:scale(.92) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+  .question-num{font-family:'Baloo 2',cursive;font-size:.8rem;font-weight:800;color:var(--purple-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+  .question-text{font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:700;color:var(--night);line-height:1.45;margin-bottom:22px}
+  .options{display:flex;flex-direction:column;gap:12px}
+  .option-btn{background:var(--cave);border:2.5px solid transparent;border-radius:16px;padding:14px 18px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;color:var(--night);cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:12px;position:relative}
+  .option-btn:hover:not(:disabled){border-color:var(--purple-light);background:#EFE8F8;transform:translateX(4px)}
+  .option-btn.correct{background:#ECFDF5;border-color:var(--green);color:#1a5c34;animation:correctPop .4s cubic-bezier(.34,1.56,.64,1)}
+  .option-btn.wrong{background:#FFF0F0;border-color:var(--red);color:#7a2020;animation:shake .4s ease}
+  .option-btn.revealed-correct{background:#ECFDF5;border-color:var(--green);opacity:.7}
+  .option-btn:disabled{cursor:default}
+  .option-letter{font-size:.85rem;font-weight:800;position:absolute;left:18px;color:var(--purple-light);opacity:.6}
+  .option-text{padding-left:20px}
+  @keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .feedback{margin-top:18px;padding:14px 18px;border-radius:16px;font-size:.95rem;font-weight:700;line-height:1.5;display:none}
+  .feedback.show{display:flex;gap:10px;align-items:flex-start;animation:fadeIn .3s ease}
+  .feedback.correct-feedback{background:#ECFDF5;color:#1a5c34;border:2px solid #86efac}
+  .feedback.wrong-feedback{background:#FFF0F0;color:#7a2020;border:2px solid #fca5a5}
+  .feedback-icon{font-size:1.4rem;flex-shrink:0}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .next-btn{display:none;margin-top:20px;width:100%;padding:16px;background:linear-gradient(135deg,var(--night),#2D1B69);color:var(--lavender);font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;border:none;border-radius:16px;cursor:pointer;transition:all .2s}
+  .next-btn:hover{transform:translateY(-2px)}
+  .next-btn.show{display:block;animation:fadeIn .3s ease}
+  .score-screen{text-align:center;background:var(--mist);border-radius:24px;padding:36px 24px;box-shadow:0 8px 32px rgba(26,10,46,.3);border:2px solid rgba(156,39,176,.2);animation:cardIn .5s cubic-bezier(.34,1.56,.64,1) both;display:none}
+  .score-screen.show{display:block}
+  .trophy{font-size:5rem;margin-bottom:12px;animation:pulse 2s ease-in-out infinite}
+  .score-title{font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:var(--night);margin-bottom:8px}
+  .score-number{font-family:'Baloo 2',cursive;font-size:3.5rem;font-weight:800;color:var(--purple-light);line-height:1}
+  .score-sub{font-size:.95rem;color:var(--night);opacity:.75;margin-top:4px}
+  .score-message{margin:20px 0;padding:18px;background:linear-gradient(135deg,#EDE0F8,#D9C3F0);border-radius:16px;font-size:1rem;font-weight:700;color:var(--night);border-left:5px solid var(--purple-light);line-height:1.6}
+  .verse-box{background:var(--cave);border-radius:16px;padding:16px 18px;font-size:.9rem;color:var(--night);font-style:italic;line-height:1.6;margin-bottom:24px;opacity:.85}
+  .verse-ref{font-style:normal;font-weight:700;display:block;margin-top:6px;color:var(--purple-light);font-size:.85rem}
+  .stars{font-size:2rem;letter-spacing:4px;margin:12px 0}
+  .restart-btn{padding:16px 36px;background:linear-gradient(135deg,var(--purple),#6A1B9A);color:#fff;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;border:none;border-radius:16px;cursor:pointer;box-shadow:0 4px 16px rgba(74,20,140,.4);transition:all .2s}
+  .restart-btn:hover{transform:translateY(-2px)}
+  .confetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:100}
+  .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 2.5s ease-in forwards}
+  @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="star">⭐</div><div class="star">✨</div><div class="star">🌟</div><div class="star">💫</div><div class="star">⭐</div>
+<div class="container">
+  <div class="header">
+    <span class="main-emoji">🕊️</span>
+    <h1>The Still Small Voice</h1>
+    <p class="subtitle">A Story from 1 Kings 19:1–13</p>
+    <span class="scripture-badge">📖 1 Kings 19:1–13</span>
+  </div>
+  <div class="progress-label" id="progressLabel">Question 1 of 8</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+  <div class="card" id="quizCard">
+    <div class="question-num" id="questionNum">Question 1</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback"><span class="feedback-icon" id="feedbackIcon"></span><span id="feedbackText"></span></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div class="score-screen" id="scoreScreen">
+    <div class="trophy" id="trophyEmoji">🏆</div>
+    <div class="stars" id="starsDisplay"></div>
+    <div class="score-title" id="scoreTitle">Well Done!</div>
+    <div class="score-number" id="scoreNumber"></div>
+    <div class="score-sub">questions answered correctly</div>
+    <div class="score-message" id="scoreMessage"></div>
+    <div class="verse-box">"Be still, and know that I am God."<span class="verse-ref">— Psalm 46:10</span></div>
+    <button class="restart-btn" onclick="restartQuiz()">🔄 Try Again!</button>
+  </div>
+</div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+<script>
+const questions=[
+  {question:"What amazing thing had Elijah done just before this story begins?",options:["He parted the Red Sea","He called down fire from heaven on Mount Carmel","He built the temple in Jerusalem","He fed a thousand people with one loaf"],answer:1,feedback:{correct:"Yes! 🔥 Elijah had stood alone before hundreds of people on Mount Carmel, called down fire from heaven, and everyone fell on their faces crying 'The Lord — He is God!'",wrong:"Just before this story, Elijah had called down fire from heaven on Mount Carmel — the greatest day of his life. Yet right after came his hardest moment."}},
+  {question:"What was Elijah's honest prayer under the desert tree?",options:["'Lord, give me more strength to fight!'","'I have had enough, Lord. I cannot go on.'","'Please send another prophet instead of me.'","'I am ready for the next great battle!'"],answer:1,feedback:{correct:"Such an honest, brave prayer! 🙏 'I have had enough, Lord. I cannot go on.' One of the most honest prayers in all of Scripture — a worn-out man telling God the truth.",wrong:"Elijah prayed honestly: 'I have had enough, Lord. I cannot go on.' Not polished or heroic — just a tired man under a tree, telling God exactly how he felt."}},
+  {question:"What did God do when Elijah was exhausted under the tree?",options:["He told Elijah to be stronger and keep going","He let Elijah sleep and sent an angel with bread and water","He sent a vision of the future","He brought other prophets to encourage him"],answer:1,feedback:{correct:"So tender! 🍞 God let Elijah sleep. Then an angel came — not with a lecture, but with warm bread and cool water. 'Get up and eat.' That's all.",wrong:"God let Elijah sleep. Then an angel arrived with warm bread and cool water, touched him gently, and said simply: 'Get up and eat.' No lecture. Just care."}},
+  {question:"What did God mean when the angel said 'The journey is too great for you'?",options:["Elijah had chosen the wrong path","God understood Elijah was genuinely tired and would need strength","Elijah would need to find a horse for the journey","The mountain was too far for one person to climb alone"],answer:1,feedback:{correct:"Exactly! 💛 God didn't argue with Elijah's tiredness. He simply acknowledged it — 'the journey is real and hard' — and gave him food for strength. So kind.",wrong:"God wasn't scolding Elijah — He was acknowledging that the journey ahead was genuinely hard, and that Elijah would need real strength for it. So He fed him."}},
+  {question:"What three powerful things happened on the mountain BEFORE God spoke?",options:["Rain, lightning, and a rainbow","A mighty wind, an earthquake, and fire","Thunder, hail, and darkness","A flood, a storm, and a bright light"],answer:1,feedback:{correct:"Right! ⛰️ A wind so strong it tore the mountains apart. Then an earthquake. Then fire. Three enormous, terrifying, spectacular things — and God was in none of them.",wrong:"A mighty wind that split rocks, then an earthquake, then fire — three enormous spectacular things. Yet God was not in any of them. He came after, in the quiet."}},
+  {question:"Where was God actually found?",options:["In the mighty wind","In the earthquake","In the fire","In the still small voice — a gentle whisper after all the noise"],answer:3,feedback:{correct:"Yes! 🤫 After all the noise and spectacle — the still small voice. A gentle whisper. Softer than fire, quieter than an earthquake. That's where God was.",wrong:"God was in none of the spectacular things. He came after — in a still small voice, a gentle whisper. The quietest thing on the mountain carried the greatest presence."}},
+  {question:"What three things did God give Elijah to help him keep going?",options:["Gold, a new staff, and a map","A direction to go, a companion named Elisha, and the truth that he was not alone","More fire from heaven, a new prayer, and food for a year","A message for the king, a new cloak, and a faithful donkey"],answer:1,feedback:{correct:"Beautiful! 🌟 A road ahead. A friend named Elisha to walk beside him. And the truth: seven thousand people in Israel had not given up. Elijah was never as alone as he felt.",wrong:"God gave Elijah three gifts: a direction to go, a companion named Elisha, and the truth that 7,000 others had stayed faithful. Elijah was never as alone as he thought."}},
+  {question:"Why did God choose to speak in a whisper rather than the wind or fire?",options:["God's voice is too quiet for thunder","A whisper requires you to be still, quiet, and leaning in to listen","Whispers travel further than loud sounds","Elijah was afraid of loud noises after the earthquake"],answer:1,feedback:{correct:"Perfect! 🕊️ A whisper asks something that wind and fire do not — stillness. Quiet. The willingness to lean in. The still small voice is always speaking. We must be still to hear it.",wrong:"A whisper requires stillness and quiet — you have to lean in to hear it. God chose the whisper because hearing it means you've chosen to be still and listen."}}
+];
+let currentQ=0,score=0,answered=false;
+function loadQuestion(){answered=false;const q=questions[currentQ];const total=questions.length;document.getElementById('questionNum').textContent=`Question ${currentQ+1}`;document.getElementById('questionText').textContent=q.question;document.getElementById('progressLabel').textContent=`Question ${currentQ+1} of ${total}`;document.getElementById('progressBar').style.width=`${(currentQ/total)*100}%`;const container=document.getElementById('optionsContainer');container.innerHTML='';const letters=['A','B','C','D'];q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='option-btn';btn.innerHTML=`<span class="option-letter">${letters[i]}</span><span class="option-text">${opt}</span>`;btn.onclick=()=>selectAnswer(i);container.appendChild(btn);});const fb=document.getElementById('feedback');fb.className='feedback';fb.classList.remove('show');document.getElementById('nextBtn').classList.remove('show');const card=document.getElementById('quizCard');card.style.animation='none';card.offsetHeight;card.style.animation='cardIn .4s cubic-bezier(.34,1.56,.64,1) both';}
+function selectAnswer(index){if(answered)return;answered=true;const q=questions[currentQ];const buttons=document.querySelectorAll('.option-btn');buttons.forEach(b=>b.disabled=true);const isCorrect=index===q.answer;if(isCorrect)score++;buttons[index].classList.add(isCorrect?'correct':'wrong');document.getElementById('feedbackIcon').textContent=isCorrect?'🎉':'🤔';document.getElementById('feedbackText').textContent=isCorrect?q.feedback.correct:q.feedback.wrong;if(!isCorrect)buttons[q.answer].classList.add('revealed-correct');document.getElementById('feedback').className=`feedback ${isCorrect?'correct-feedback':'wrong-feedback'} show`;const nextBtn=document.getElementById('nextBtn');nextBtn.textContent=currentQ<questions.length-1?'Next Question →':'See My Score! 🌟';nextBtn.classList.add('show');}
+function nextQuestion(){currentQ++;if(currentQ<questions.length)loadQuestion();else showScore();}
+function showScore(){document.getElementById('quizCard').style.display='none';document.getElementById('progressLabel').style.display='none';document.querySelector('.progress-wrap').style.display='none';const screen=document.getElementById('scoreScreen');screen.classList.add('show');const pct=score/questions.length;document.getElementById('scoreNumber').textContent=`${score} / ${questions.length}`;let trophy,stars,title,message;if(pct===1){trophy='🏆';stars='⭐⭐⭐⭐⭐';title='You Heard Every Whisper!';message="Perfect score! You were still, you listened closely, and you didn't miss a single thing. Just like Elijah came out of his cave when he heard the whisper — you leaned in and heard it all. Be still and know that He is God!";launchConfetti();}else if(pct>=.75){trophy='🕊️';stars='⭐⭐⭐⭐';title='Well Done!';message="You heard most of the whisper! Read the story once more in the quiet and the last few answers will come clearly. Keep listening!";}else if(pct>=.5){trophy='😊';stars='⭐⭐⭐';title='Good Try!';message="Sometimes the whisper takes a few listens! Read the story again — find a quiet moment, just like Elijah did, and the answers will come.";}else{trophy='💛';stars='⭐⭐';title='Be Still and Try Again!';message="Find a quiet spot, read the story once more, and come back. The still small voice is patient — and so is this quiz. 🕊️";}document.getElementById('trophyEmoji').textContent=trophy;document.getElementById('starsDisplay').textContent=stars;document.getElementById('scoreTitle').textContent=title;document.getElementById('scoreMessage').textContent=message;}
+function launchConfetti(){const wrap=document.getElementById('confettiWrap');const colors=['#4A148C','#9C27B0','#E1BEE7','#F9A825','#4CAF72','#1A0A2E'];for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.cssText=`left:${Math.random()*100}%;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-delay:${Math.random()*1.5}s;animation-duration:${2+Math.random()*1.5}s;border-radius:${Math.random()>.5?'50%':'2px'};`;wrap.appendChild(p);setTimeout(()=>p.remove(),4000);}}
+function restartQuiz(){currentQ=0;score=0;answered=false;document.getElementById('scoreScreen').classList.remove('show');document.getElementById('quizCard').style.display='block';document.getElementById('progressLabel').style.display='block';document.querySelector('.progress-wrap').style.display='block';loadQuestion();}
+loadQuestion();
+</script>
+</body>
+</html>

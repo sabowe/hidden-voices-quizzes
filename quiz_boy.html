@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Boy Who Gave Everything – Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--warm:#E65100;--amber:#FF8F00;--yellow:#FDD835;--bread:#FFF8E7;--dark:#3E1A00;--green:#4CAF72;--red:#E05555;--sand:#FFF3E0;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#FFF3E0 0%,#FFE0B2 50%,#FFCC80 100%);min-height:100vh;overflow-x:hidden}
+  .crumb{position:fixed;font-size:2rem;opacity:.2;pointer-events:none;animation:float 6s ease-in-out infinite}
+  .crumb:nth-child(1){top:5%;left:4%;animation-delay:0s}.crumb:nth-child(2){top:22%;right:5%;animation-delay:1s;font-size:1.5rem}.crumb:nth-child(3){bottom:15%;left:4%;animation-delay:2.5s}.crumb:nth-child(4){bottom:8%;right:5%;animation-delay:1.8s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+  .container{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+  .header{text-align:center;margin-bottom:32px;animation:dropIn .6s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes dropIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .main-emoji{font-size:4.5rem;display:block;margin-bottom:8px;animation:bounce 2.5s ease-in-out infinite}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  h1{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--dark);line-height:1.2;text-shadow:2px 2px 0 rgba(255,255,255,.5)}
+  .subtitle{font-size:1rem;color:var(--dark);opacity:.75;margin-top:6px;font-weight:600}
+  .scripture-badge{display:inline-block;background:var(--dark);color:var(--yellow);font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-top:10px;letter-spacing:.5px}
+  .progress-wrap{background:rgba(255,255,255,.45);border-radius:12px;height:12px;margin-bottom:24px;overflow:hidden}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--warm),var(--yellow));border-radius:12px;transition:width .5s cubic-bezier(.34,1.56,.64,1)}
+  .progress-label{text-align:center;font-size:.82rem;font-weight:700;color:var(--dark);margin-bottom:10px;opacity:.8}
+  .card{background:var(--bread);border-radius:24px;padding:28px 24px;box-shadow:0 8px 32px rgba(62,26,0,.15);animation:cardIn .4s cubic-bezier(.34,1.56,.64,1) both;border:2px solid rgba(230,81,0,.15)}
+  @keyframes cardIn{from{transform:scale(.92) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+  .question-num{font-family:'Baloo 2',cursive;font-size:.8rem;font-weight:800;color:var(--warm);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+  .question-text{font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:700;color:var(--dark);line-height:1.45;margin-bottom:22px}
+  .options{display:flex;flex-direction:column;gap:12px}
+  .option-btn{background:var(--sand);border:2.5px solid transparent;border-radius:16px;padding:14px 18px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;color:var(--dark);cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:12px;position:relative}
+  .option-btn:hover:not(:disabled){border-color:var(--warm);background:#FFF0E0;transform:translateX(4px)}
+  .option-btn.correct{background:#ECFDF5;border-color:var(--green);color:#1a5c34;animation:correctPop .4s cubic-bezier(.34,1.56,.64,1)}
+  .option-btn.wrong{background:#FFF0F0;border-color:var(--red);color:#7a2020;animation:shake .4s ease}
+  .option-btn.revealed-correct{background:#ECFDF5;border-color:var(--green);opacity:.7}
+  .option-btn:disabled{cursor:default}
+  .option-letter{font-size:.85rem;font-weight:800;position:absolute;left:18px;color:var(--warm);opacity:.6}
+  .option-text{padding-left:20px}
+  @keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .feedback{margin-top:18px;padding:14px 18px;border-radius:16px;font-size:.95rem;font-weight:700;line-height:1.5;display:none}
+  .feedback.show{display:flex;gap:10px;align-items:flex-start;animation:fadeIn .3s ease}
+  .feedback.correct-feedback{background:#ECFDF5;color:#1a5c34;border:2px solid #86efac}
+  .feedback.wrong-feedback{background:#FFF0F0;color:#7a2020;border:2px solid #fca5a5}
+  .feedback-icon{font-size:1.4rem;flex-shrink:0}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .next-btn{display:none;margin-top:20px;width:100%;padding:16px;background:linear-gradient(135deg,var(--dark),#5C2800);color:var(--yellow);font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;border:none;border-radius:16px;cursor:pointer;transition:all .2s}
+  .next-btn:hover{transform:translateY(-2px)}
+  .next-btn.show{display:block;animation:fadeIn .3s ease}
+  .score-screen{text-align:center;background:var(--bread);border-radius:24px;padding:36px 24px;box-shadow:0 8px 32px rgba(62,26,0,.15);border:2px solid rgba(230,81,0,.2);animation:cardIn .5s cubic-bezier(.34,1.56,.64,1) both;display:none}
+  .score-screen.show{display:block}
+  .trophy{font-size:5rem;margin-bottom:12px;animation:bounce 2s ease-in-out infinite}
+  .score-title{font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:var(--dark);margin-bottom:8px}
+  .score-number{font-family:'Baloo 2',cursive;font-size:3.5rem;font-weight:800;color:var(--warm);line-height:1}
+  .score-sub{font-size:.95rem;color:var(--dark);opacity:.75;margin-top:4px}
+  .score-message{margin:20px 0;padding:18px;background:linear-gradient(135deg,#FFE8CC,#FFD09A);border-radius:16px;font-size:1rem;font-weight:700;color:var(--dark);border-left:5px solid var(--warm);line-height:1.6}
+  .verse-box{background:var(--sand);border-radius:16px;padding:16px 18px;font-size:.9rem;color:var(--dark);font-style:italic;line-height:1.6;margin-bottom:24px;opacity:.85}
+  .verse-ref{font-style:normal;font-weight:700;display:block;margin-top:6px;color:var(--warm);font-size:.85rem}
+  .stars{font-size:2rem;letter-spacing:4px;margin:12px 0}
+  .restart-btn{padding:16px 36px;background:linear-gradient(135deg,var(--warm),#BF360C);color:#fff;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;border:none;border-radius:16px;cursor:pointer;box-shadow:0 4px 16px rgba(230,81,0,.4);transition:all .2s}
+  .restart-btn:hover{transform:translateY(-2px)}
+  .confetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:100}
+  .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 2.5s ease-in forwards}
+  @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="crumb">🍞</div><div class="crumb">🐟</div><div class="crumb">🧺</div><div class="crumb">✨</div>
+<div class="container">
+  <div class="header">
+    <span class="main-emoji">🧺</span>
+    <h1>The Boy Who Gave Everything</h1>
+    <p class="subtitle">A Story from John 6:1–13</p>
+    <span class="scripture-badge">📖 John 6:1–13</span>
+  </div>
+  <div class="progress-label" id="progressLabel">Question 1 of 8</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+  <div class="card" id="quizCard">
+    <div class="question-num" id="questionNum">Question 1</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback"><span class="feedback-icon" id="feedbackIcon"></span><span id="feedbackText"></span></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div class="score-screen" id="scoreScreen">
+    <div class="trophy" id="trophyEmoji">🏆</div>
+    <div class="stars" id="starsDisplay"></div>
+    <div class="score-title" id="scoreTitle">Well Done!</div>
+    <div class="score-number" id="scoreNumber"></div>
+    <div class="score-sub">questions answered correctly</div>
+    <div class="score-message" id="scoreMessage"></div>
+    <div class="verse-box">"Now to him who is able to do far more abundantly than all that we ask or think, according to the power at work within us."<span class="verse-ref">— Ephesians 3:20</span></div>
+    <button class="restart-btn" onclick="restartQuiz()">🔄 Try Again!</button>
+  </div>
+</div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+<script>
+const questions=[
+  {question:"What did Eli's mother pack in his basket for the journey?",options:["Ten large loaves and three fish","Five barley loaves and two small fish","A big pot of stew and flat bread","Seven rolls and a jar of honey"],answer:1,feedback:{correct:"Yes! 🍞🐟 Five small barley loaves, still warm from baking, and two salted fish wrapped in cloth. A simple lunch that would change history!",wrong:"Eli's mother packed five barley loaves — small, round, still warm — and two small salted fish wrapped in cloth. Simple lunch. Extraordinary purpose."}},
+  {question:"Why did Eli go to the hillside that day?",options:["To sell bread at the market","To hear Jesus the Teacher, who healed the sick and spoke life-changing words","To fish by the Sea of Galilee","To deliver goods to a nearby town"],answer:1,feedback:{correct:"Right! 🌟 The whole village buzzed with talk of the Teacher who healed the sick. Eli was determined: 'I will not miss this for anything!'",wrong:"Jesus was at the hillside near the sea that day — the Teacher who healed the sick and spoke words that made grown men weep and laugh. Eli was not going to miss it!"}},
+  {question:"Which disciple found Eli in the crowd?",options:["Philip","Peter","Andrew","Matthew"],answer:2,feedback:{correct:"Yes! ✝️ Andrew came through the crowd scanning faces and hands and baskets — and stopped when he saw Eli's lunch. He knelt down so their eyes were level and asked what Eli had.",wrong:"It was Andrew who found Eli — moving through the crowd with worried eyes, looking at baskets and bags, stopping when he noticed the five loaves and two fish."}},
+  {question:"What did Andrew say when he brought Eli and the lunch to Jesus?",options:["'This boy says he wants to help with the miracle.'","'There is a boy here with five barley loaves and two fish — but what are they for so many?'","'I found enough bread for the disciples at least.'","'This child insists on giving you his lunch, Teacher.'"],answer:1,feedback:{correct:"Perfect! 💛 'There is a boy here with five barley loaves and two fish — but what are they for so many?' The question that seemed like too-little became more than enough!",wrong:"Andrew said: 'There is a boy here who has five barley loaves and two fish, but what are they for so many?' He doubted the math — but Jesus knew exactly what to do."}},
+  {question:"What did Eli almost do when everyone looked at him?",options:["He started eating the bread himself","He almost pulled the basket back and said 'Never mind, it's just my lunch'","He ran away through the crowd","He asked how much money he would be paid"],answer:1,feedback:{correct:"So relatable! 😊 He almost pulled the basket back. But Jesus was looking at him — not the basket, not the crowd — at Eli. As if asking: 'Will you trust Me?'",wrong:"Eli almost pulled the basket back — 'it's too small, it's nothing, just my lunch.' But Jesus looked at him — really at him — and the real question was: Will you trust Me?"}},
+  {question:"After everyone ate, how much food was left over?",options:["Half a basket remained","Twelve full baskets of leftovers","One basket per disciple","Nothing — it was all eaten up"],answer:1,feedback:{correct:"Twelve baskets full! 📦📦📦 More left over than Eli had brought in the first place! 'I gave Him everything I had — and He gave back more than I could carry.'",wrong:"Twelve full baskets of leftovers — more than Eli had brought! When you give Jesus what you have, He gives back more than you could ever carry."}},
+  {question:"What did the woman in the crowd say to Eli at the end?",options:["'Your bread was delicious, young man!'","'Thank you,' very softly, looking at him with quiet wonder","'You will be famous in all of Israel!'","'The Teacher wants you to join his disciples.'"],answer:1,feedback:{correct:"Beautiful! 🥹 She looked at him for a long moment, slowly shook her head in wonder, and said softly: 'Thank you.' Eli didn't know what to say — so he just nodded.",wrong:"The woman looked at him, slowly shook her head in wonder at what she had witnessed, and said softly: 'Thank you.' Two words that meant everything."}},
+  {question:"What is the big message of Eli's story?",options:["Always bring extra food when you travel","Small things, freely given, become great things in God's hands","You have to be a disciple for God to use you","Only miracles can feed a hungry crowd"],answer:1,feedback:{correct:"Yes! 🌟 Eli didn't do the miracle — Jesus did. But Jesus used Eli's lunch. Small things, freely given, become great things in God's hands. What's your five loaves?",wrong:"The great truth: small things, freely given, become great things in God's hands. Eli didn't do the miracle — but his willing 'yes' made it possible."}}
+];
+let currentQ=0,score=0,answered=false;
+function loadQuestion(){answered=false;const q=questions[currentQ];const total=questions.length;document.getElementById('questionNum').textContent=`Question ${currentQ+1}`;document.getElementById('questionText').textContent=q.question;document.getElementById('progressLabel').textContent=`Question ${currentQ+1} of ${total}`;document.getElementById('progressBar').style.width=`${(currentQ/total)*100}%`;const container=document.getElementById('optionsContainer');container.innerHTML='';const letters=['A','B','C','D'];q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='option-btn';btn.innerHTML=`<span class="option-letter">${letters[i]}</span><span class="option-text">${opt}</span>`;btn.onclick=()=>selectAnswer(i);container.appendChild(btn);});const fb=document.getElementById('feedback');fb.className='feedback';fb.classList.remove('show');document.getElementById('nextBtn').classList.remove('show');const card=document.getElementById('quizCard');card.style.animation='none';card.offsetHeight;card.style.animation='cardIn .4s cubic-bezier(.34,1.56,.64,1) both';}
+function selectAnswer(index){if(answered)return;answered=true;const q=questions[currentQ];const buttons=document.querySelectorAll('.option-btn');buttons.forEach(b=>b.disabled=true);const isCorrect=index===q.answer;if(isCorrect)score++;buttons[index].classList.add(isCorrect?'correct':'wrong');document.getElementById('feedbackIcon').textContent=isCorrect?'🎉':'🤔';document.getElementById('feedbackText').textContent=isCorrect?q.feedback.correct:q.feedback.wrong;if(!isCorrect)buttons[q.answer].classList.add('revealed-correct');document.getElementById('feedback').className=`feedback ${isCorrect?'correct-feedback':'wrong-feedback'} show`;const nextBtn=document.getElementById('nextBtn');nextBtn.textContent=currentQ<questions.length-1?'Next Question →':'See My Score! 🌟';nextBtn.classList.add('show');}
+function nextQuestion(){currentQ++;if(currentQ<questions.length)loadQuestion();else showScore();}
+function showScore(){document.getElementById('quizCard').style.display='none';document.getElementById('progressLabel').style.display='none';document.querySelector('.progress-wrap').style.display='none';const screen=document.getElementById('scoreScreen');screen.classList.add('show');const pct=score/questions.length;document.getElementById('scoreNumber').textContent=`${score} / ${questions.length}`;let trophy,stars,title,message;if(pct===1){trophy='🏆';stars='⭐⭐⭐⭐⭐';title='You Gave Everything!';message="Just like Eli held out his basket, you gave this quiz your full attention — and it was more than enough! Remember: small things given freely become great things in God's hands. What will you offer Him today?";launchConfetti();}else if(pct>=.75){trophy='🍞';stars='⭐⭐⭐⭐';title='Well Done!';message="You remembered most of Eli's story beautifully! Read it once more and the twelve baskets will be complete. Keep going!";}else if(pct>=.5){trophy='😊';stars='⭐⭐⭐';title='Good Effort!';message="Eli almost pulled his basket back too — but he didn't! Read the story again and come back. Every little bit counts!";}else{trophy='💛';stars='⭐⭐';title='Try Again!';message="Remember: what you have is not too small! Read Eli's story once more and come back — God will multiply your understanding just like He multiplied the loaves. 🍞";}document.getElementById('trophyEmoji').textContent=trophy;document.getElementById('starsDisplay').textContent=stars;document.getElementById('scoreTitle').textContent=title;document.getElementById('scoreMessage').textContent=message;}
+function launchConfetti(){const wrap=document.getElementById('confettiWrap');const colors=['#E65100','#FF8F00','#FDD835','#4CAF72','#3E1A00','#E05555'];for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.cssText=`left:${Math.random()*100}%;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-delay:${Math.random()*1.5}s;animation-duration:${2+Math.random()*1.5}s;border-radius:${Math.random()>.5?'50%':'2px'};`;wrap.appendChild(p);setTimeout(()=>p.remove(),4000);}}
+function restartQuiz(){currentQ=0;score=0;answered=false;document.getElementById('scoreScreen').classList.remove('show');document.getElementById('quizCard').style.display='block';document.getElementById('progressLabel').style.display='block';document.querySelector('.progress-wrap').style.display='block';loadQuestion();}
+loadQuestion();
+</script>
+</body>
+</html>

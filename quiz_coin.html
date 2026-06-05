@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Coin in the Deep – Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--blue:#1565C0;--blue-light:#64B5F6;--aqua:#00ACC1;--gold:#F9A825;--green:#4CAF72;--red:#E05555;--dark:#0D2B4E;--water:#E3F2FD;--foam:#F0FAFF;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#B3E5FC 0%,#64B5F6 50%,#1565C0 100%);min-height:100vh;overflow-x:hidden}
+  .bubble{position:fixed;font-size:2rem;opacity:.2;pointer-events:none;animation:rise 6s ease-in-out infinite}
+  .bubble:nth-child(1){bottom:10%;left:5%;animation-delay:0s}.bubble:nth-child(2){bottom:20%;right:6%;animation-delay:1.5s;font-size:1.5rem}.bubble:nth-child(3){bottom:5%;left:15%;animation-delay:3s;font-size:1.3rem}.bubble:nth-child(4){bottom:30%;right:3%;animation-delay:2s}
+  @keyframes rise{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+  .container{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+  .header{text-align:center;margin-bottom:32px;animation:dropIn .6s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes dropIn{from{transform:translateY(-40px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .main-emoji{font-size:4.5rem;display:block;margin-bottom:8px;animation:swim 3s ease-in-out infinite}
+  @keyframes swim{0%,100%{transform:translateX(0) rotate(-5deg)}50%{transform:translateX(10px) rotate(5deg)}}
+  h1{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:#fff;line-height:1.2;text-shadow:2px 2px 8px rgba(0,0,50,.3)}
+  .subtitle{font-size:1rem;color:#fff;opacity:.85;margin-top:6px;font-weight:600}
+  .scripture-badge{display:inline-block;background:var(--dark);color:var(--blue-light);font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-top:10px;letter-spacing:.5px}
+  .progress-wrap{background:rgba(255,255,255,.35);border-radius:12px;height:12px;margin-bottom:24px;overflow:hidden}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--gold),#FFE082);border-radius:12px;transition:width .5s cubic-bezier(.34,1.56,.64,1)}
+  .progress-label{text-align:center;font-size:.82rem;font-weight:700;color:#fff;margin-bottom:10px;opacity:.9}
+  .card{background:var(--foam);border-radius:24px;padding:28px 24px;box-shadow:0 8px 32px rgba(13,43,78,.2);animation:cardIn .4s cubic-bezier(.34,1.56,.64,1) both;border:2px solid rgba(100,181,246,.3)}
+  @keyframes cardIn{from{transform:scale(.92) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+  .question-num{font-family:'Baloo 2',cursive;font-size:.8rem;font-weight:800;color:var(--aqua);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+  .question-text{font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:700;color:var(--dark);line-height:1.45;margin-bottom:22px}
+  .options{display:flex;flex-direction:column;gap:12px}
+  .option-btn{background:var(--water);border:2.5px solid transparent;border-radius:16px;padding:14px 18px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;color:var(--dark);cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:12px;position:relative}
+  .option-btn:hover:not(:disabled){border-color:var(--blue);background:#D6EEFF;transform:translateX(4px)}
+  .option-btn.correct{background:#ECFDF5;border-color:var(--green);color:#1a5c34;animation:correctPop .4s cubic-bezier(.34,1.56,.64,1)}
+  .option-btn.wrong{background:#FFF0F0;border-color:var(--red);color:#7a2020;animation:shake .4s ease}
+  .option-btn.revealed-correct{background:#ECFDF5;border-color:var(--green);opacity:.7}
+  .option-btn:disabled{cursor:default}
+  .option-letter{font-size:.85rem;font-weight:800;position:absolute;left:18px;color:var(--blue);opacity:.6}
+  .option-text{padding-left:20px}
+  @keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .feedback{margin-top:18px;padding:14px 18px;border-radius:16px;font-size:.95rem;font-weight:700;line-height:1.5;display:none}
+  .feedback.show{display:flex;gap:10px;align-items:flex-start;animation:fadeIn .3s ease}
+  .feedback.correct-feedback{background:#ECFDF5;color:#1a5c34;border:2px solid #86efac}
+  .feedback.wrong-feedback{background:#FFF0F0;color:#7a2020;border:2px solid #fca5a5}
+  .feedback-icon{font-size:1.4rem;flex-shrink:0}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .next-btn{display:none;margin-top:20px;width:100%;padding:16px;background:linear-gradient(135deg,var(--dark),#1A3F6F);color:var(--blue-light);font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;border:none;border-radius:16px;cursor:pointer;transition:all .2s}
+  .next-btn:hover{transform:translateY(-2px)}
+  .next-btn.show{display:block;animation:fadeIn .3s ease}
+  .score-screen{text-align:center;background:var(--foam);border-radius:24px;padding:36px 24px;box-shadow:0 8px 32px rgba(13,43,78,.2);border:2px solid rgba(100,181,246,.3);animation:cardIn .5s cubic-bezier(.34,1.56,.64,1) both;display:none}
+  .score-screen.show{display:block}
+  .trophy{font-size:5rem;margin-bottom:12px;animation:swim 2s ease-in-out infinite}
+  .score-title{font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:var(--dark);margin-bottom:8px}
+  .score-number{font-family:'Baloo 2',cursive;font-size:3.5rem;font-weight:800;color:var(--blue);line-height:1}
+  .score-sub{font-size:.95rem;color:var(--dark);opacity:.75;margin-top:4px}
+  .score-message{margin:20px 0;padding:18px;background:linear-gradient(135deg,#DAEEFF,#B3E5FC);border-radius:16px;font-size:1rem;font-weight:700;color:var(--dark);border-left:5px solid var(--blue);line-height:1.6}
+  .verse-box{background:var(--water);border-radius:16px;padding:16px 18px;font-size:.9rem;color:var(--dark);font-style:italic;line-height:1.6;margin-bottom:24px;opacity:.85}
+  .verse-ref{font-style:normal;font-weight:700;display:block;margin-top:6px;color:var(--blue);font-size:.85rem}
+  .stars{font-size:2rem;letter-spacing:4px;margin:12px 0}
+  .restart-btn{padding:16px 36px;background:linear-gradient(135deg,var(--blue),#1A3F6F);color:#fff;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;border:none;border-radius:16px;cursor:pointer;box-shadow:0 4px 16px rgba(21,101,192,.4);transition:all .2s}
+  .restart-btn:hover{transform:translateY(-2px)}
+  .confetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:100}
+  .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 2.5s ease-in forwards}
+  @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="bubble">🐟</div><div class="bubble">💧</div><div class="bubble">🪙</div><div class="bubble">🌊</div>
+<div class="container">
+  <div class="header">
+    <span class="main-emoji">🐟</span>
+    <h1>The Coin in the Deep</h1>
+    <p class="subtitle">A Story from Matthew 17:24–27</p>
+    <span class="scripture-badge">📖 Matthew 17:24–27</span>
+  </div>
+  <div class="progress-label" id="progressLabel">Question 1 of 8</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+  <div class="card" id="quizCard">
+    <div class="question-num" id="questionNum">Question 1</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback"><span class="feedback-icon" id="feedbackIcon"></span><span id="feedbackText"></span></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div class="score-screen" id="scoreScreen">
+    <div class="trophy" id="trophyEmoji">🏆</div>
+    <div class="stars" id="starsDisplay"></div>
+    <div class="score-title" id="scoreTitle">Well Done!</div>
+    <div class="score-number" id="scoreNumber"></div>
+    <div class="score-sub">questions answered correctly</div>
+    <div class="score-message" id="scoreMessage"></div>
+    <div class="verse-box">"Trust in the Lord with all your heart, and do not lean on your own understanding."<span class="verse-ref">— Proverbs 3:5</span></div>
+    <button class="restart-btn" onclick="restartQuiz()">🔄 Try Again!</button>
+  </div>
+</div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+<script>
+const questions=[
+  {question:"Where did our fish live?",options:["In the River Jordan","In the Sea of Galilee","In a large pond near Jerusalem","In the Mediterranean Sea"],answer:1,feedback:{correct:"Splendid! 🌊 The Sea of Galilee — cool, clear, full of interesting things — reeds that sway like dancers, smooth golden stones, and lovely muddy corners to explore.",wrong:"Our fish lived in the Sea of Galilee — cool, clear water full of reeds, smooth stones, and the finest fish-life you could imagine!"}},
+  {question:"How did the fish first get the coin?",options:["A fisherman placed it there","Peter threw the coin into the water for fun","The fish saw it falling and snapped it up","It was already there when the fish was born"],answer:2,feedback:{correct:"Yes! 🪙 Something glimmering tumbled down through the shafts of morning light — and our fish, not being very wise in that moment, shot upward and SNAP! Got it.",wrong:"The coin fell tumbling through the water — round, flat, gloriously shiny — and our fish shot upward and snapped it up. Not wise, but it led to something wonderful!"}},
+  {question:"How did the fish feel after swallowing the coin?",options:["Sick and unhappy","Full of a quiet glow and a sense of importance it couldn't explain","Very hungry for more shiny things","Frightened about what it had done"],answer:1,feedback:{correct:"Right! ✨ The fish couldn't explain it, but it felt significant — as if it were carrying something that mattered. And it was!",wrong:"The fish felt a quiet, deep-down glow — a sense of importance it had never felt before, as if it were carrying something that truly mattered."}},
+  {question:"What was unusual about the fish's choice to swim toward the hook?",options:["It was looking for food and was very hungry","Normally it avoided every hook, but something inside pulled it toward this one","It had never seen a hook before","It thought the hook was another shiny coin"],answer:1,feedback:{correct:"Wonderful! 🎣 Our fish was expert at avoiding hooks. But this time, something deep and not entirely its own said: 'This hook. This morning.' And it swam forward.",wrong:"Our fish was the greatest hook-avoider in the sea — yet something deep inside pulled it toward this particular hook on this particular morning."}},
+  {question:"Who was the fisherman who pulled the fish from the water?",options:["Andrew","John","Peter","Matthew"],answer:2,feedback:{correct:"Correct! 🎣 Peter — big, broad-faced, with weathered sun-browned hands. A man who had pulled thousands of fish from this very sea. He'd never seen anything like this.",wrong:"It was Peter — large, weathered, experienced. A man who had spent his life on this sea. He had never seen anything like what he found in that fish's mouth."}},
+  {question:"What did Peter find in the fish's mouth?",options:["A beautiful pearl","A golden ring","A shekel — a whole, perfect, gleaming coin","A small stone with writing on it"],answer:2,feedback:{correct:"Yes! 🪙 A shekel — whole, perfect, gleaming — sitting in the mouth of a fish in the Sea of Galilee. Peter stared. Then laughed. Then went very quiet.",wrong:"A shekel — one whole, perfect, gleaming coin — sitting in the mouth of a fish, exactly as Jesus had said it would be. Peter laughed, then went very quiet with wonder."}},
+  {question:"What did Peter say quietly after finding the coin?",options:["'I knew this would happen!'","'Of course. Of course He knew.'","'This is the strangest day of my life.'","'I must find Jesus and tell Him immediately.'"],answer:1,feedback:{correct:"Beautiful! 🕊️ 'Of course. Of course He knew.' The quiet of a man who has just been reminded, for the thousandth time, that Jesus is not like anyone else in the world.",wrong:"Peter held the coin up to the light and said barely a whisper: 'Of course. Of course He knew.' The awe of someone standing at the edge of a miracle."}},
+  {question:"What is the big lesson of the fish's story?",options:["Always be suspicious of shiny things","You don't need to understand the whole plan — just carry what you're given and trust the quiet pull","Fish are smarter than they look","God only uses important people for important tasks"],answer:1,feedback:{correct:"Perfect! 🌟 You don't need to understand everything. You only need to carry what you've been given, trust the quiet pull when it comes, and show up. God takes care of the rest.",wrong:"The lesson: you don't need to understand the whole plan. Carry what you've been given. Trust the quiet pull. Show up. God will take care of the rest — just like He did for the fish."}}
+];
+let currentQ=0,score=0,answered=false;
+function loadQuestion(){answered=false;const q=questions[currentQ];const total=questions.length;document.getElementById('questionNum').textContent=`Question ${currentQ+1}`;document.getElementById('questionText').textContent=q.question;document.getElementById('progressLabel').textContent=`Question ${currentQ+1} of ${total}`;document.getElementById('progressBar').style.width=`${(currentQ/total)*100}%`;const container=document.getElementById('optionsContainer');container.innerHTML='';const letters=['A','B','C','D'];q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='option-btn';btn.innerHTML=`<span class="option-letter">${letters[i]}</span><span class="option-text">${opt}</span>`;btn.onclick=()=>selectAnswer(i);container.appendChild(btn);});const fb=document.getElementById('feedback');fb.className='feedback';fb.classList.remove('show');document.getElementById('nextBtn').classList.remove('show');const card=document.getElementById('quizCard');card.style.animation='none';card.offsetHeight;card.style.animation='cardIn .4s cubic-bezier(.34,1.56,.64,1) both';}
+function selectAnswer(index){if(answered)return;answered=true;const q=questions[currentQ];const buttons=document.querySelectorAll('.option-btn');buttons.forEach(b=>b.disabled=true);const isCorrect=index===q.answer;if(isCorrect)score++;buttons[index].classList.add(isCorrect?'correct':'wrong');document.getElementById('feedbackIcon').textContent=isCorrect?'🎉':'🤔';document.getElementById('feedbackText').textContent=isCorrect?q.feedback.correct:q.feedback.wrong;if(!isCorrect)buttons[q.answer].classList.add('revealed-correct');document.getElementById('feedback').className=`feedback ${isCorrect?'correct-feedback':'wrong-feedback'} show`;const nextBtn=document.getElementById('nextBtn');nextBtn.textContent=currentQ<questions.length-1?'Next Question →':'See My Score! 🌟';nextBtn.classList.add('show');}
+function nextQuestion(){currentQ++;if(currentQ<questions.length)loadQuestion();else showScore();}
+function showScore(){document.getElementById('quizCard').style.display='none';document.getElementById('progressLabel').style.display='none';document.querySelector('.progress-wrap').style.display='none';const screen=document.getElementById('scoreScreen');screen.classList.add('show');const pct=score/questions.length;document.getElementById('scoreNumber').textContent=`${score} / ${questions.length}`;let trophy,stars,title,message;if(pct===1){trophy='🏆';stars='⭐⭐⭐⭐⭐';title='Perfectly Reeled In!';message="You know every detail of the fish's remarkable story! Just like the fish trusted the quiet pull and showed up at the right moment, you showed up with full attention for every question. God knows where you are — and He has plans!";launchConfetti();}else if(pct>=.75){trophy='🐟';stars='⭐⭐⭐⭐';title='Great Catch!';message="You caught most of the story! Read it once more and you'll know every ripple. The fish trusted without understanding — so can you!";}else if(pct>=.5){trophy='😊';stars='⭐⭐⭐';title='Good Try!';message="The fish didn't understand everything either — it just kept swimming! Read the story again and you'll catch what you missed.";}else{trophy='💛';stars='⭐⭐';title='Keep Swimming!';message="Even the finest fish in the sea needs to look more closely sometimes! Read the story again and come back. God knows exactly where you are. 🐟";}document.getElementById('trophyEmoji').textContent=trophy;document.getElementById('starsDisplay').textContent=stars;document.getElementById('scoreTitle').textContent=title;document.getElementById('scoreMessage').textContent=message;}
+function launchConfetti(){const wrap=document.getElementById('confettiWrap');const colors=['#1565C0','#64B5F6','#F9A825','#4CAF72','#00ACC1','#E05555'];for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.cssText=`left:${Math.random()*100}%;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-delay:${Math.random()*1.5}s;animation-duration:${2+Math.random()*1.5}s;border-radius:${Math.random()>.5?'50%':'2px'};`;wrap.appendChild(p);setTimeout(()=>p.remove(),4000);}}
+function restartQuiz(){currentQ=0;score=0;answered=false;document.getElementById('scoreScreen').classList.remove('show');document.getElementById('quizCard').style.display='block';document.getElementById('progressLabel').style.display='block';document.querySelector('.progress-wrap').style.display='block';loadQuestion();}
+loadQuestion();
+</script>
+</body>
+</html>

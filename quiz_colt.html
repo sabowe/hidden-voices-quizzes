@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Little Colt's Greatest Day – Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4930A;
+    --golden-light: #F5C842;
+    --sky: #4A90D9;
+    --green: #4CAF72;
+    --red: #E05555;
+    --sand: #F5EDD6;
+    --brown: #7B4A1E;
+    --dark: #2C1A0E;
+    --white: #FFFDF7;
+    --palm: #3A7D44;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #FEF3C7 0%, #FDE68A 40%, #FBBF24 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Floating palm leaves decoration */
+  .leaf {
+    position: fixed;
+    font-size: 2rem;
+    opacity: 0.18;
+    pointer-events: none;
+    animation: float 6s ease-in-out infinite;
+  }
+  .leaf:nth-child(1) { top: 5%; left: 3%; animation-delay: 0s; }
+  .leaf:nth-child(2) { top: 20%; right: 4%; animation-delay: 1s; font-size: 1.5rem; }
+  .leaf:nth-child(3) { bottom: 15%; left: 6%; animation-delay: 2s; font-size: 1.8rem; }
+  .leaf:nth-child(4) { bottom: 5%; right: 5%; animation-delay: 3s; }
+  .leaf:nth-child(5) { top: 50%; left: 1%; animation-delay: 1.5s; font-size: 1.3rem; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: dropIn 0.6s cubic-bezier(.34,1.56,.64,1) both;
+  }
+
+  @keyframes dropIn {
+    from { transform: translateY(-40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .colt-emoji {
+    font-size: 4.5rem;
+    display: block;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--brown);
+    line-height: 1.2;
+    text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--brown);
+    opacity: 0.75;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  .scripture-badge {
+    display: inline-block;
+    background: var(--brown);
+    color: var(--golden-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: rgba(255,255,255,0.5);
+    border-radius: 12px;
+    height: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--golden-light));
+    border-radius: 12px;
+    transition: width 0.5s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 2px 8px rgba(212,147,10,0.4);
+  }
+
+  .progress-label {
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  /* Question card */
+  .card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 32px rgba(123,74,30,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    animation: cardIn 0.4s cubic-bezier(.34,1.56,.64,1) both;
+    border: 2px solid rgba(212,147,10,0.15);
+  }
+
+  @keyframes cardIn {
+    from { transform: scale(0.92) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .question-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .question-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.45;
+    margin-bottom: 22px;
+  }
+
+  /* Answer options */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-btn {
+    background: var(--sand);
+    border: 2.5px solid transparent;
+    border-radius: 16px;
+    padding: 14px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: '';
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(212,147,10,0.15);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    font-size: 1.1rem;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: #FFF8E7;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(212,147,10,0.2);
+  }
+
+  .option-btn.correct {
+    background: #ECFDF5;
+    border-color: var(--green);
+    color: #1a5c34;
+    animation: correctPop 0.4s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .option-btn.correct::before { background: var(--green); }
+
+  .option-btn.wrong {
+    background: #FFF0F0;
+    border-color: var(--red);
+    color: #7a2020;
+    animation: shake 0.4s ease;
+  }
+
+  .option-btn.wrong::before { background: var(--red); }
+
+  .option-btn.revealed-correct {
+    background: #ECFDF5;
+    border-color: var(--green);
+    opacity: 0.7;
+  }
+
+  .option-btn:disabled { cursor: default; }
+
+  .option-letter {
+    font-size: 0.85rem;
+    font-weight: 800;
+    position: absolute;
+    left: 18px;
+    color: var(--brown);
+    opacity: 0.6;
+  }
+
+  .option-text { padding-left: 20px; }
+
+  .option-icon {
+    margin-left: auto;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  @keyframes correctPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Feedback */
+  .feedback {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease;
+    display: none;
+  }
+
+  .feedback.show { display: flex; gap: 10px; align-items: flex-start; }
+
+  .feedback.correct-feedback {
+    background: #ECFDF5;
+    color: #1a5c34;
+    border: 2px solid #86efac;
+  }
+
+  .feedback.wrong-feedback {
+    background: #FFF0F0;
+    color: #7a2020;
+    border: 2px solid #fca5a5;
+  }
+
+  .feedback-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Next button */
+  .next-btn {
+    display: none;
+    margin-top: 20px;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--brown), #9B5E28);
+    color: var(--golden-light);
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(123,74,30,0.3);
+    letter-spacing: 0.5px;
+  }
+
+  .next-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(123,74,30,0.4); }
+  .next-btn.show { display: block; animation: fadeIn 0.3s ease; }
+
+  /* Score screen */
+  .score-screen {
+    text-align: center;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 36px 24px;
+    box-shadow: 0 8px 32px rgba(123,74,30,0.15);
+    border: 2px solid rgba(212,147,10,0.2);
+    animation: cardIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+    display: none;
+  }
+
+  .score-screen.show { display: block; }
+
+  .trophy { font-size: 5rem; margin-bottom: 12px; animation: bounce 1.5s ease-in-out infinite; }
+
+  .score-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--brown);
+    margin-bottom: 8px;
+  }
+
+  .score-number {
+    font-family: 'Baloo 2', cursive;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 3px 3px 0 rgba(212,147,10,0.2);
+  }
+
+  .score-sub {
+    font-size: 0.95rem;
+    color: var(--brown);
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  .score-message {
+    margin: 20px 0;
+    padding: 18px;
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    border-left: 5px solid var(--gold);
+    line-height: 1.6;
+  }
+
+  .verse-box {
+    background: var(--sand);
+    border-radius: 16px;
+    padding: 16px 18px;
+    font-size: 0.9rem;
+    color: var(--brown);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .verse-ref {
+    font-style: normal;
+    font-weight: 700;
+    display: block;
+    margin-top: 6px;
+    color: var(--gold);
+    font-size: 0.85rem;
+  }
+
+  .restart-btn {
+    padding: 16px 36px;
+    background: linear-gradient(135deg, var(--gold), #E8A800);
+    color: var(--white);
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(212,147,10,0.4);
+    transition: all 0.2s;
+  }
+
+  .restart-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,147,10,0.5); }
+
+  /* Stars */
+  .stars {
+    font-size: 2rem;
+    letter-spacing: 4px;
+    margin: 12px 0;
+  }
+
+  /* Confetti burst on perfect score */
+  .confetti-wrap {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden; z-index: 100;
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: confettiFall 2.5s ease-in forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 1.6rem; }
+    .question-text { font-size: 1.1rem; }
+    .option-btn { padding: 12px 16px; font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating decorations -->
+<div class="leaf">🌴</div>
+<div class="leaf">🌿</div>
+<div class="leaf">🌾</div>
+<div class="leaf">🌴</div>
+<div class="leaf">🍃</div>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <span class="colt-emoji">🐴</span>
+    <h1>The Little Colt's<br>Greatest Day</h1>
+    <p class="subtitle">How well do you know the story?</p>
+    <span class="scripture-badge">📖 Mark 11:1–7</span>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-label" id="progressLabel">Question 1 of 8</div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+  </div>
+
+  <!-- Quiz card -->
+  <div class="card" id="quizCard">
+    <div class="question-num" id="questionNum">Question 1</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback">
+      <span class="feedback-icon" id="feedbackIcon"></span>
+      <span id="feedbackText"></span>
+    </div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+
+  <!-- Score screen -->
+  <div class="score-screen" id="scoreScreen">
+    <div class="trophy" id="trophyEmoji">🏆</div>
+    <div class="stars" id="starsDisplay"></div>
+    <div class="score-title" id="scoreTitle">Well Done!</div>
+    <div class="score-number" id="scoreNumber"></div>
+    <div class="score-sub">questions answered correctly</div>
+    <div class="score-message" id="scoreMessage"></div>
+    <div class="verse-box">
+      "We are God's handiwork, created in Christ Jesus to do good works,
+      which God prepared in advance for us to do."
+      <span class="verse-ref">— Ephesians 2:10</span>
+    </div>
+    <button class="restart-btn" onclick="restartQuiz()">🔄 Try Again!</button>
+  </div>
+</div>
+
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<script>
+const questions = [
+  {
+    question: "Where did the little colt live at the beginning of the story?",
+    options: ["In a stable in Jerusalem", "Tied to a post on a street in Bethany", "In a field by the river", "In a cave near the olive trees"],
+    answer: 1,
+    feedback: {
+      correct: "Yes! 🌅 The colt was tied to a post on a dusty village road in Bethany — every morning looked the same.",
+      wrong: "Not quite! The little colt was tied to a post on a quiet street in Bethany, watching the world go by."
+    }
+  },
+  {
+    question: "How did the colt feel while watching other animals get chosen?",
+    options: ["Happy and excited", "Angry and jealous", "Small and overlooked, wondering if it would ever be needed", "Sleepy and unbothered"],
+    answer: 2,
+    feedback: {
+      correct: "Exactly right! 💛 The colt quietly wondered, 'Will I ever be needed for anything?' — just like we sometimes feel.",
+      wrong: "The colt actually felt small and overlooked, quietly wondering if anyone would ever come for it."
+    }
+  },
+  {
+    question: "How many men came to untie the colt?",
+    options: ["One man", "Two men", "Three disciples", "A whole crowd"],
+    answer: 1,
+    feedback: {
+      correct: "Well done! ✌️ Two men in simple robes with dusty sandals came walking with purpose down the lane.",
+      wrong: "It was two men — they walked purposefully down the lane and stopped when they saw the colt."
+    }
+  },
+  {
+    question: "What did the two men say when people asked why they were untying the colt?",
+    options: ["'We are taking it to the market.'", "'The King has commanded it.'", "'The Lord has need of it.'", "'This colt belongs to us.'"],
+    answer: 2,
+    feedback: {
+      correct: "Beautiful! 🌟 'The Lord has need of it.' — five little words that changed everything for the colt!",
+      wrong: "The five most important words in the story: 'The Lord has need of it.' Simple, but powerful!"
+    }
+  },
+  {
+    question: "What happened when Jesus sat on the colt's back?",
+    options: ["The colt ran away in fear", "The colt's legs grew steady and its breathing grew calm", "The colt stumbled and fell", "The colt became very tired"],
+    answer: 1,
+    feedback: {
+      correct: "Yes! 🕊️ The colt's wobbly legs grew steady and it felt calm — the presence of Jesus made it more than it had been before.",
+      wrong: "When Jesus sat on the colt, something wonderful happened — its legs grew steady and its breathing grew calm!"
+    }
+  },
+  {
+    question: "What did the crowd do as Jesus rode the colt into Jerusalem?",
+    options: ["They were silent and still", "They threw stones at the road", "They spread cloaks and waved palm branches, shouting 'Hosanna!'", "They ran away in surprise"],
+    answer: 2,
+    feedback: {
+      correct: "Hosanna! 🌴🎉 The people spread their cloaks, waved palm branches, and shouted 'Blessed is He who comes in the name of the Lord!'",
+      wrong: "The crowd spread cloaks on the road, waved palm branches, and shouted 'Hosanna! Blessed is He who comes in the name of the Lord!'"
+    }
+  },
+  {
+    question: "What did the colt realize at the end of the day?",
+    options: ["It wished it had been a bigger horse", "Just showing up and letting itself be led was enough — it had carried the King", "It wanted to go back to Jerusalem", "It was angry it had to go back to its post"],
+    answer: 1,
+    feedback: {
+      correct: "Perfect! 🌙 The colt understood that its simple, humble, one-step-at-a-time obedience had been more than enough.",
+      wrong: "The colt discovered something beautiful: just showing up and letting itself be led — that was enough to carry the King of Kings."
+    }
+  },
+  {
+    question: "What is the big message of this story for you?",
+    options: ["Only big and strong people can be used by God", "You need to do something great before God can use you", "God can use ordinary, willing hearts — even yours!", "The colt was special because it was the fastest animal"],
+    answer: 2,
+    feedback: {
+      correct: "That's it! 🎊 God chose a colt that had never been ridden. He doesn't need the biggest or fastest — just willing hearts like yours!",
+      wrong: "The real message is this: God can use ordinary, willing hearts — even yours! You don't have to be great before God can use you."
+    }
+  }
+];
+
+let currentQ = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+  answered = false;
+  const q = questions[currentQ];
+  const total = questions.length;
+
+  document.getElementById('questionNum').textContent = `Question ${currentQ + 1}`;
+  document.getElementById('questionText').textContent = q.question;
+  document.getElementById('progressLabel').textContent = `Question ${currentQ + 1} of ${total}`;
+  document.getElementById('progressBar').style.width = `${(currentQ / total) * 100}%`;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="option-text">${opt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    container.appendChild(btn);
+  });
+
+  const feedback = document.getElementById('feedback');
+  feedback.className = 'feedback';
+  feedback.classList.remove('show');
+
+  document.getElementById('nextBtn').classList.remove('show');
+
+  // Animate card in fresh
+  const card = document.getElementById('quizCard');
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = 'cardIn 0.4s cubic-bezier(.34,1.56,.64,1) both';
+}
+
+function selectAnswer(index) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[currentQ];
+  const buttons = document.querySelectorAll('.option-btn');
+  const feedback = document.getElementById('feedback');
+  const nextBtn = document.getElementById('nextBtn');
+
+  buttons.forEach(b => b.disabled = true);
+
+  const isCorrect = index === q.answer;
+  if (isCorrect) score++;
+
+  buttons[index].classList.add(isCorrect ? 'correct' : 'wrong');
+  document.getElementById('feedbackIcon').textContent = isCorrect ? '🎉' : '🤔';
+  document.getElementById('feedbackText').textContent = isCorrect ? q.feedback.correct : q.feedback.wrong;
+
+  if (!isCorrect) {
+    buttons[q.answer].classList.add('revealed-correct');
+  }
+
+  feedback.className = `feedback ${isCorrect ? 'correct-feedback' : 'wrong-feedback'} show`;
+  nextBtn.textContent = currentQ < questions.length - 1 ? 'Next Question →' : 'See My Score! 🌟';
+  nextBtn.classList.add('show');
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < questions.length) {
+    loadQuestion();
+  } else {
+    showScore();
+  }
+}
+
+function showScore() {
+  document.getElementById('quizCard').style.display = 'none';
+  document.getElementById('progressLabel').style.display = 'none';
+  document.querySelector('.progress-wrap').style.display = 'none';
+
+  const screen = document.getElementById('scoreScreen');
+  screen.classList.add('show');
+
+  const total = questions.length;
+  const pct = score / total;
+
+  document.getElementById('scoreNumber').textContent = `${score} / ${total}`;
+
+  let trophy, stars, title, message;
+
+  if (pct === 1) {
+    trophy = '🏆'; stars = '⭐⭐⭐⭐⭐';
+    title = 'Amazing! You Got It All Right!';
+    message = 'You know the little colt\'s story so well! Just like the colt, you showed up, paid attention, and gave your very best. The Lord has need of hearts like yours! 🌟';
+    launchConfetti();
+  } else if (pct >= 0.75) {
+    trophy = '🌟'; stars = '⭐⭐⭐⭐';
+    title = 'Great Job!';
+    message = 'You listened closely to the little colt\'s story! A few more reads and you\'ll remember every detail. Keep going — you\'re doing wonderfully!';
+  } else if (pct >= 0.5) {
+    trophy = '😊'; stars = '⭐⭐⭐';
+    title = 'Good Effort!';
+    message = 'The little colt didn\'t give up either! Read the story again and try once more — every time you read, you\'ll discover something new. God loves a willing heart!';
+  } else {
+    trophy = '💛'; stars = '⭐⭐';
+    title = 'Keep Trying!';
+    message = 'The little colt waited patiently at its post, and so can you! Read the story once more and come back. You\'ve got this — one step at a time! 🐴';
+  }
+
+  document.getElementById('trophyEmoji').textContent = trophy;
+  document.getElementById('starsDisplay').textContent = stars;
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreMessage').textContent = message;
+}
+
+function launchConfetti() {
+  const wrap = document.getElementById('confettiWrap');
+  const colors = ['#D4930A','#F5C842','#4CAF72','#4A90D9','#E05555','#9B5E28'];
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: -10px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      width: ${6 + Math.random() * 8}px;
+      height: ${6 + Math.random() * 8}px;
+      animation-delay: ${Math.random() * 1.5}s;
+      animation-duration: ${2 + Math.random() * 1.5}s;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+    `;
+    wrap.appendChild(p);
+    setTimeout(() => p.remove(), 4000);
+  }
+}
+
+function restartQuiz() {
+  currentQ = 0;
+  score = 0;
+  answered = false;
+
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('quizCard').style.display = 'block';
+  document.getElementById('progressLabel').style.display = 'block';
+  document.querySelector('.progress-wrap').style.display = 'block';
+
+  loadQuestion();
+}
+
+// Start!
+loadQuestion();
+</script>
+</body>
+</html>
