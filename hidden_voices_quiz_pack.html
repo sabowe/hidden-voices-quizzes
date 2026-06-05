@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hidden Voices Series – Quiz Activity Pack</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#D4930A;--gold-light:#F5C842;--brown:#7B4A1E;--dark:#2C1A0E;--white:#FFFDF7;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#FEF3C7 0%,#FDE68A 50%,#FBBF24 100%);min-height:100vh;overflow-x:hidden}
+  .leaf{position:fixed;font-size:2.5rem;opacity:.15;pointer-events:none;animation:float 7s ease-in-out infinite}
+  .leaf:nth-child(1){top:3%;left:2%;animation-delay:0s}.leaf:nth-child(2){top:10%;right:3%;animation-delay:2s}.leaf:nth-child(3){bottom:10%;left:3%;animation-delay:4s}.leaf:nth-child(4){bottom:3%;right:2%;animation-delay:1s}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+  .container{max-width:720px;margin:0 auto;padding:32px 20px 60px}
+  .header{text-align:center;margin-bottom:40px;animation:dropIn .7s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes dropIn{from{transform:translateY(-50px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .brand{font-family:'Baloo 2',cursive;font-size:.85rem;font-weight:800;color:var(--brown);opacity:.7;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+  .series-title{font-family:'Baloo 2',cursive;font-size:2.4rem;font-weight:800;color:var(--dark);line-height:1.2;text-shadow:3px 3px 0 rgba(255,255,255,.5)}
+  .series-sub{font-size:1.05rem;color:var(--brown);opacity:.8;margin-top:8px;font-weight:600}
+  .divider{display:flex;align-items:center;gap:12px;margin:20px auto;max-width:300px}
+  .divider-line{flex:1;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .divider-icon{font-size:1.4rem}
+  .intro-box{background:rgba(255,255,255,.6);border-radius:20px;padding:20px 24px;margin-bottom:36px;border:2px solid rgba(212,147,10,.2);backdrop-filter:blur(4px)}
+  .intro-box p{font-size:.95rem;color:var(--dark);line-height:1.7;font-weight:600}
+  .books-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+  @media(max-width:500px){.books-grid{grid-template-columns:1fr}}
+  .book-card{background:var(--white);border-radius:20px;padding:22px 18px;box-shadow:0 6px 24px rgba(44,26,14,.12);border:2px solid transparent;transition:all .25s cubic-bezier(.34,1.56,.64,1);cursor:pointer;text-decoration:none;display:block;position:relative;overflow:hidden}
+  .book-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:20px 20px 0 0}
+  .book-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(44,26,14,.2)}
+  .book-card.colt::before{background:linear-gradient(90deg,#D4930A,#F5C842)}
+  .book-card.wind::before{background:linear-gradient(90deg,#5BA4CF,#B3D9F2)}
+  .book-card.lily::before{background:linear-gradient(90deg,#3A7D44,#A8D5B5)}
+  .book-card.bush::before{background:linear-gradient(90deg,#E85D04,#FFBA08)}
+  .book-card.coin::before{background:linear-gradient(90deg,#1565C0,#64B5F6)}
+  .book-card.boy::before{background:linear-gradient(90deg,#E65100,#FDD835)}
+  .book-card.voice::before{background:linear-gradient(90deg,#4A148C,#9C27B0)}
+  .book-emoji{font-size:2.8rem;display:block;margin-bottom:10px}
+  .book-num{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;opacity:.5;margin-bottom:4px}
+  .book-title{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:var(--dark);line-height:1.3;margin-bottom:6px}
+  .book-scripture{font-size:.78rem;font-weight:700;opacity:.6;color:var(--dark);margin-bottom:10px}
+  .book-theme{font-size:.82rem;color:var(--brown);font-weight:600;line-height:1.4;margin-bottom:14px}
+  .play-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:12px;font-family:'Baloo 2',cursive;font-size:.85rem;font-weight:800;color:#fff;border:none;cursor:pointer;transition:all .2s}
+  .colt .play-btn{background:linear-gradient(135deg,#7B4A1E,#9B5E28)}
+  .wind .play-btn{background:linear-gradient(135deg,#1A3550,#2a5070)}
+  .lily .play-btn{background:linear-gradient(135deg,#1C3A22,#2e5c36)}
+  .bush .play-btn{background:linear-gradient(135deg,#3D1A00,#5C2800)}
+  .coin .play-btn{background:linear-gradient(135deg,#0D2B4E,#1A3F6F)}
+  .boy .play-btn{background:linear-gradient(135deg,#3E1A00,#5C2800)}
+  .voice .play-btn{background:linear-gradient(135deg,#1A0A2E,#2D1B69)}
+  .play-btn:hover{transform:scale(1.05)}
+  .colt{border-color:rgba(212,147,10,.2)}.wind{border-color:rgba(91,164,207,.2)}.lily{border-color:rgba(58,125,68,.2)}.bush{border-color:rgba(232,93,4,.2)}.coin{border-color:rgba(21,101,192,.2)}.boy{border-color:rgba(230,81,0,.2)}.voice{border-color:rgba(74,20,140,.2)}
+  .footer-box{background:rgba(255,255,255,.55);border-radius:20px;padding:24px;text-align:center;border:2px solid rgba(212,147,10,.2)}
+  .footer-box h3{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--dark);margin-bottom:8px}
+  .footer-box p{font-size:.9rem;color:var(--brown);font-weight:600;line-height:1.6}
+  .brand-sig{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:var(--gold);margin-top:12px;display:block}
+</style>
+</head>
+<body>
+<div class="leaf">🌴</div><div class="leaf">🌿</div><div class="leaf">🌾</div><div class="leaf">🍃</div>
+<div class="container">
+  <div class="header">
+    <div class="brand">Abowe's Tapestry</div>
+    <div class="series-title">The Hidden Voices Series</div>
+    <div class="series-sub">Interactive Quiz Activity Pack — All 7 Books</div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-icon">✦</div><div class="divider-line"></div></div>
+  </div>
+
+  <div class="intro-box">
+    <p>Seven Bible stories. Seven hidden voices. One big truth: God uses the small, the ordinary, and the overlooked for extraordinary things. Complete all seven quizzes and discover how well you know each story! 🌟</p>
+  </div>
+
+  <div class="books-grid">
+
+    <a class="book-card colt" href="quiz_colt.html">
+      <span class="book-emoji">🐴</span>
+      <div class="book-num">Book 1</div>
+      <div class="book-title">The Little Colt's Greatest Day</div>
+      <div class="book-scripture">📖 Mark 11:1–7</div>
+      <div class="book-theme">The colt who carried a King — and learned that showing up is enough.</div>
+      <button class="play-btn">▶ Start Quiz</button>
+    </a>
+
+    <a class="book-card wind" href="quiz_breath_of_god.html">
+      <span class="book-emoji">🌬️</span>
+      <div class="book-num">Book 2</div>
+      <div class="book-title">The Breath of God</div>
+      <div class="book-scripture">📖 Genesis 1:2 · John 3:8</div>
+      <div class="book-theme">The Wind who wanted a color — and received God's very presence instead.</div>
+      <button class="play-btn">▶ Start Quiz</button>
+    </a>
+
+    <a class="book-card lily" href="quiz_lily.html">
+      <span class="book-emoji">🌷</span>
+      <div class="book-num">Book 3</div>
+      <div class="book-title">Lily Dressed by God</div>
+      <div class="book-scripture">📖 Matthew 6:28–30</div>
+      <div class="book-theme">The lily who felt undressed — and discovered she was clothed more beautifully than a king.</div>
+      <button class="play-btn">▶ Start Quiz</button>
+    </a>
+
+    <a class="book-card bush" href="quiz_bush.html">
+      <span class="book-emoji">🔥</span>
+      <div class="book-num">Book 4</div>
+      <div class="book-title">The Bush That Would Not Burn</div>
+      <div class="book-scripture">📖 Exodus 3:1–6</div>
+      <div class="book-theme">The ordinary desert bush chosen by God to change the world.</div>
+      <button class="play-btn">▶ Start Quiz</button>
+    </a>
+
+    <a class="book-card coin" href="quiz_coin.html">
+      <span class="book-emoji">🐟</span>
+      <div class="book-num">Book 5</div>
+      <div class="book-title">The Coin in the Deep</div>
+      <div class="book-scripture">📖 Matthew 17:24–27</div>
+      <div class="book-theme">The fish who carried a coin it didn't understand — and was exactly enough.</div>
+      <button class="play-btn">▶ Start Quiz</button>
+    </a>
+
+    <a class="book-card boy" href="quiz_boy.html">
+      <span class="book-emoji">🧺</span>
+      <div class="book-num">Book 6</div>
+      <div class="book-title">The Boy Who Gave Everything</div>
+      <div class="book-scripture">📖 John 6:1–13</div>
+      <div class="book-theme">The boy whose small lunch fed five thousand — because he held it out.</div>
+      <button class="play-btn">▶ Start Quiz</button>
+    </a>
+
+    <a class="book-card voice" href="quiz_still_small_voice.html" style="grid-column:1/-1;max-width:360px;margin:0 auto;width:100%">
+      <span class="book-emoji">🕊️</span>
+      <div class="book-num">Book 7</div>
+      <div class="book-title">The Still Small Voice</div>
+      <div class="book-scripture">📖 1 Kings 19:1–13</div>
+      <div class="book-theme">Elijah in the cave — and the God who came not in fire or wind, but in a whisper.</div>
+      <button class="play-btn">▶ Start Quiz</button>
+    </a>
+
+  </div>
+
+  <div class="footer-box">
+    <h3>A Note for Families 💛</h3>
+    <p>Each quiz has 8 questions drawn from the story. Read the book first, then take the quiz — and try again until you get a perfect score! Every story carries a truth that lasts a lifetime.</p>
+    <span class="brand-sig">✦ Abowe's Tapestry ✦</span>
+  </div>
+</div>
+</body>
+</html>
